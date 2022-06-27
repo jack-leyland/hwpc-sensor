@@ -199,7 +199,7 @@ open_group_outfile(struct csv_context *ctx, const char *group_name)
 }
 
 static int
-write_events_value(struct csv_context *ctx, const char *group, FILE *fd, uint64_t timestamp, const char *target, const char *socket, const char *cpu, zhashx_t *events)
+write_events_value(struct csv_context *ctx, const char *group, FILE *fd, int64_t timestamp, const char *target, const char *socket, const char *cpu, zhashx_t *events)
 {
     zlistx_t *events_name = NULL;
     char buffer[CSV_LINE_BUFFER_SIZE] = {0};

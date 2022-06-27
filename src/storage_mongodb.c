@@ -158,7 +158,7 @@ mongodb_store_report(struct storage_module *module, struct payload *payload)
      *   }
      * }
      */
-    BSON_APPEND_DATE_TIME(&document, "timestamp", payload->timestamp);
+    BSON_APPEND_INT64(&document, "timestamp", payload->timestamp);
     BSON_APPEND_UTF8(&document, "sensor", ctx->config.sensor_name);
     BSON_APPEND_UTF8(&document, "target", payload->target_name);
 
@@ -192,7 +192,7 @@ mongodb_store_report(struct storage_module *module, struct payload *payload)
 
     /* insert document into collection */
     if (!mongoc_collection_insert_one(ctx->collection, &document, NULL, NULL, &error)) {
-        zsys_error("mongodb: failed insert timestamp=%lu target=%s: %s", payload->timestamp, payload->target_name, error.message);
+        zsys_error("mongodb: failed insert timestamp=%li target=%s: %s", payload->timestamp, payload->target_name, error.message);
         ret = -1;
     }
 

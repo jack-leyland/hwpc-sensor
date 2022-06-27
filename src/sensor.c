@@ -280,7 +280,8 @@ main(int argc, char **argv)
         }
 
         /* send clock tick to monitoring actors */
-        zsock_send(ticker, "s8", "CLOCK_TICK", zclock_time());
+        //Changed to zclock_usecs for desired timestamp format
+        zsock_send(ticker, "s8", "CLOCK_TICK", zclock_usecs());
 
         zclock_sleep((int)config->sensor.frequency);
     }

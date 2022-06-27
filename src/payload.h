@@ -33,6 +33,11 @@
 #define PAYLOAD_H
 
 #include <czmq.h>
+#include <time.h>
+/*
+ * Constants for timespec conversions
+ */
+#define MICROSECONDS_PER_SECOND 1000000
 
 /*
  * payload_cpu_data stores the events values of a cpu.
@@ -60,10 +65,11 @@ struct payload_group_data
 
 /*
  * payload stores the data collected by the monitoring module for the reporting module.
+ * Added: monotonic timestamp from CLOCK_MONOTONIC, converted to microseconds
  */
 struct payload
 {
-    uint64_t timestamp;
+    int64_t timestamp;
     char *target_name;
     zhashx_t *groups; /* char *group_name -> struct payload_group_data *group_data */
 };
@@ -71,7 +77,7 @@ struct payload
 /*
  * payload_create allocate the required resources of a monitoring payload.
  */
-struct payload *payload_create(uint64_t timestamp, const char *target_name);
+struct payload *payload_create(int64_t timestamp, const char *target_name);
 
 /*
  * payload_destroy free the allocated resources of the monitoring payload.

@@ -112,7 +112,7 @@ payload_group_data_destroy(struct payload_group_data **data_ptr)
 }
 
 struct payload *
-payload_create(uint64_t timestamp, const char *target_name)
+payload_create(int64_t timestamp, const char *target_name)
 {
     struct payload *payload = malloc(sizeof(struct payload));
 

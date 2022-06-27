@@ -487,20 +487,21 @@ error:
 static void
 handle_ticker(struct perf_context *ctx)
 {
-    uint64_t timestamp;
+    int64_t timestamp;
     struct payload *payload = NULL;
     
     /* get tick timestamp */
     zsock_recv(ctx->ticker, "s8", NULL, &timestamp);
 
+    //TODO: Add monotonic TS
     payload = payload_create(timestamp, ctx->target_name);
     if (!payload) {
-        zsys_error("perf<%s>: failed to allocate payload for timestamp=%lu", ctx->target_name, timestamp);
+        zsys_error("perf<%s>: failed to allocate payload for timestamp=%li", ctx->target_name, timestamp);
         return;
     }
 
     if (populate_payload(ctx, payload)) {
-        zsys_error("perf<%s>: failed to populate payload for timestamp=%lu", ctx->target_name, timestamp);
+        zsys_error("perf<%s>: failed to populate payload for timestamp=%li", ctx->target_name, timestamp);
         payload_destroy(payload);
         return;
     }
